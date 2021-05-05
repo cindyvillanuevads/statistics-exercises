@@ -8,14 +8,30 @@ np.random.seed(1349) #
 
 
 # 1. How likely is it that you roll doubles when rolling two dice?
+
 n_trials = nrows = 10_000
 n_dice = ncols= 2
-
+#get the posibles outcomes for each roll
 rolls = np.random.choice([1,2,3,4,5,6], n_trials * n_dice).reshape(nrows, ncols)
-#lets convert to a data frame and compare the two columns x[0] == x[1] this gives us a boolean result
+
+#lets convert it  to a dataframe so we can use lambda and compare the two columns x[0] == x[1] this gives us a boolean result
 res = pd.DataFrame(rolls).apply(lambda x : x[0] == x[1] in x.values, axis=1)
-#the we calculate the mean
-res.mean()
+
+#calculate the mean
+prob = res.mean()
+
+
+
+# *** not using DataFrame **
+
+#comprehension list
+res = [x[0] == x[1] for x in rolls]
+
+# I convert my list to a pdseries
+x = pd.Series(res)
+
+#then I calculate the mean
+x.mean()
 
 #syntaxis for labda useinf if lambda x: True if x % 2 == 0 else False
 
