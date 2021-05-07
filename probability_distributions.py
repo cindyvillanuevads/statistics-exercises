@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from scipy import stats
-
+from env import host, username, password
 
 
 # 1.A bank found that the average number of cars waiting during the noon hour at a drive-up window follows a Poisson distribution with a mean of 2 cars. 
@@ -53,6 +53,13 @@ stats.poisson(λ).pmf(1)
 # 7. Connect to the employees database and find the average salary of current employees, along with the standard deviation. For the following questions,
 #  calculate the answer based on modeling the employees salaries with a normal distribution defined by the calculated mean and standard deviation 
 # then compare this answer to the actual values present in the salaries dataset.
+
+def get_db_url(username,password,host,db_name):
+    return f'mysql+pymysql://{username}:{password}@{host}/{db_name}'
+url =  get_db_url(username,password,host, 'employees')
+
+salaries_df = pd.read_sql('SELECT * FROM salaries ', url)
+salaries_df.head()
 
 # What percent of employees earn less than 60,000?
 # What percent of employees earn more than 95,000?
